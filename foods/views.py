@@ -19,13 +19,12 @@ def rangeView(request):
 # upload an xl file and save data to database
 def upload(request):
     if request.method == 'POST':
-        print(request.FILES)
-        # myfile = request.FILES['myfile']
-        # data = myfile.read().decode('utf-8').splitlines()
-        # for line in data:
-        #     name, calories = line.split(',')
-        #     # Food.objects.create(name=name, calories=calories)
-        #     print(name, calories)
+        myfile = request.FILES.get('myfile')
+        data = myfile.read().decode('utf-8').splitlines()
+        #skip the first line
+        data = data[1:]
+        for line in data:
+            name, calories = line.split(',')
+            Food.objects.create(name=name, calories=calories)
         return redirect('/foodtb/')
     return render(request, 'foods/upload.html')
-        
