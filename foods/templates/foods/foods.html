@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+window.onload = function() {
+
+var dataPoints = [
+    {% for food in allfoods %}
+        {label:  "{{ food.name }}", y: {{ food.calories }} },
+    {% endfor %}
+];
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2",
+	title: {
+		text: "Food Calories Table" 
+	},
+	axisY: {
+		title: "Calories",
+		titleFontSize: 24,
+		includeZero: true
+	},
+	data: [{
+		type: "column",
+		yValueFormatString: "Units",
+		dataPoints: dataPoints
+	}]
+});
+
+
+
+chart.render();
+
+}
+</script>
+</head>
+<body>
+{% for food in allfoods %}
+    name: {{ food.name }}
+    cal: {{ food.calories }}
+    <br><br>
+{% endfor %}
+<div style="height: 370px; width: 50%; display: grid; place-items: center;">
+<div id="chartContainer" ></div>
+<br><br>
+<form action="/range">
+    gt:
+    <input id="gt" type="number" name="gt" > 
+    lt:
+    <input id="lt" type="number" name="lt">
+    <br>
+    
+    <input type="submit" ></input>
+    
+</form>
+</div>
+
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html>
